@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/', to: redirect('/redirect')
   get '/redirect', to: 'googleauth#redirect', as: 'redirect'
   get '/callback', to: 'googleauth#callback', as: 'callback'
   get '/calendars', to: 'googleauth#calendars', as: 'calendars'
