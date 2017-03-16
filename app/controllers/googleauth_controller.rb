@@ -37,7 +37,13 @@ class GoogleauthController < ApplicationController
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
 
-    @calendar_list = service.list_calendar_lists
+    begin
+      @calendar_list = service.list_calendar_lists
+    rescue Google::Apis::AuthorizationError => e
+      response = client.refresh!
+      session[:authorization] = session[:authorization].merge(response)
+      retry
+    end
   end
 
   def events
