@@ -1,0 +1,19 @@
+<ul>
+  <% @event_list.items.each do |event| %>
+    <li>
+      <h3><a href="<%= event.html_link %>" target="_blank"><%= event.summary %></a></h3>
+      <% unless event.start.nil? || event.end.nil? || event.start.date_time.nil? || event.end.date_time.nil? %>
+        <p>From <%= event.start.date_time.strftime('%m/%d/%Y') %> to <%= event.end.date_time.strftime('%m/%d/%Y') %></p>
+      <% end %>
+      <% if !event.attendees.nil? && event.attendees.any? %>
+        <p> Attendees:
+          <ol>
+            <% event.attendees.each do |attendee| %>
+              <li> <%= attendee.display_name %> (<%= attendee.email %>) </li>
+            <% end %>
+          </ol>
+        </p>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
